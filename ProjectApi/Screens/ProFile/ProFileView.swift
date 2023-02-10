@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ProFile: View {
+struct ProFileView: View {
     
     @ObservedObject var viewModel: ProFileViewModel
     var user: UserData
@@ -18,7 +18,14 @@ struct ProFile: View {
                 Form {
                     Section {
                         details
+                            .alertCustom(isPresented: $viewModel.netWork.errorOn) {
+                                Alert(title:
+                                        Text(viewModel.netWork.errorString),
+                                      message: Text(viewModel.netWork.errorString),
+                                      dismissButton: .cancel(Text("Click me"),action: {viewModel.netWork.getList() }))
+                            }
                     }
+                    
                 }
             }
             .createTolbarProFileScreen(dismiss: {viewModel.navigationBackTO()}, text: String("\(user.firstName)" + "\(user.lastName)"))
@@ -26,13 +33,7 @@ struct ProFile: View {
     }
 }
 
-struct ProFile_Previews: PreviewProvider {
-    static var previews: some View {
-        ProFile(viewModel: .init(), user: UserData(id: "??", firstName: "Dima", lastName: "Kekish", age: 18, gender: "man", country: "Ukraine"))
-    }
-}
-
-extension ProFile {
+extension ProFileView {
 
     var details: some View {
         VStack {
@@ -43,5 +44,11 @@ extension ProFile {
             createButton(text: "Gender", detail: String(user.gender))
             createButton(text: "Country", detail: String(user.country))
         }
+    }
+}
+
+struct ProFileView_Previews: PreviewProvider {
+    static var previews: some View {
+        ProFileView(viewModel: .init(), user: UserData(id: "??", firstName: "Dima", lastName: "Kekish", age: 18, gender: "man", country: "Ukraine"))
     }
 }

@@ -17,7 +17,7 @@ extension View {
                    Image(systemName: "arrow.left")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 50, height: 50)
+                        .frame(width: 50, height: 20)
                 }
             }
             ToolbarItem(placement: .principal) {

@@ -9,9 +9,13 @@ import Foundation
 
 class ApiModel: ObservableObject {
     
-    @Published var listId: [String] = []
+
+    var errorOn = false
     var statusList = ""
     var statusUser = ""
+    
+    @Published var listId: [String] = []
+    @Published var errorString = ""
     @Published var users = [UserData]()
     @Published var userData = UserRespons(
         status: "??",
@@ -25,12 +29,13 @@ class ApiModel: ObservableObject {
     )
             
     func getList() {
-        guard let url = URL(string: "https://opn-interview-service.nn.r.appspot.com/list") else { fatalError("Missing URL") }
+        guard let url = URL(string: "https://opn-interview-service.nn.r.appspot.com/list") else {  return }
         var request = URLRequest(url: url)
         request.addValue("bearer \(token)", forHTTPHeaderField: "Authorization")
         let dataTask = URLSession.shared.dataTask(with: request) { (data, response, error) in
             if let error = error {
-                print("Requst error",error)
+                self.errorString = error.localizedDescription
+                self.errorOn = true
                 return
             }
             guard let response = response as? HTTPURLResponse else { return }
@@ -44,9 +49,14 @@ class ApiModel: ObservableObject {
                         
                         for id in self.listId {
                             getUser(url: id)
+                            if statusList == "error" {
+                                self.errorOn = true
+                                self.errorString = "NOOT Good"
+                            }
                         }
                     } catch let error{
-                        print("Error decode",error)
+                        self.errorString = error.localizedDescription
+                        self.errorOn = true
                     }
                 }
             }
@@ -60,7 +70,8 @@ class ApiModel: ObservableObject {
         request.addValue("bearer \(token)", forHTTPHeaderField: "Authorization")
         let dataTask = URLSession.shared.dataTask(with: request) { (data, response, error) in
             if let error = error {
-                print("Requst error",error)
+                self.errorString = error.localizedDescription
+                self.errorOn = true
                 return
             }
             guard let response = response as? HTTPURLResponse else { return }
@@ -73,11 +84,13 @@ class ApiModel: ObservableObject {
                         self.statusUser = decoded.status
                         users.append(decoded.data)
                     } catch let error{
-                        print("Error decode",error)
+                        self.errorString = error.localizedDescription
+                        self.errorOn = true
                     }
                 }
             }
         }
         dataTask.resume()
     }
+
 }

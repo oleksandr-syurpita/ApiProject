@@ -13,7 +13,7 @@ struct ProFileCoordinatorView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                ProFile(
+                ProFileView(
                     viewModel: coordinator.viewModel,
                     user: coordinator.user
                 )

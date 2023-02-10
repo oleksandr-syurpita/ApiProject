@@ -20,7 +20,7 @@ extension View {
                     .font(.callout)
             }
             Divider()
-                .frame( width: .infinity, height: 1)
+                .frame( maxWidth: .infinity)
                 .background(Color.black)
         }
     }

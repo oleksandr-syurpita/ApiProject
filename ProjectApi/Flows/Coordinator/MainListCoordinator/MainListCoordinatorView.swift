@@ -15,8 +15,7 @@ struct MainListCoordinatorView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                MainList(netWork: .init(), mainListViewModel: coordinator.viewModel)
-                    .navigationBarHidden(true)
+                MainListView(mainListViewModel: coordinator.viewModel)
                 NavigationLink(
                     unwrapping: $coordinator.route,
                     case: /MainListCoordinator.Route.navigationProFile,

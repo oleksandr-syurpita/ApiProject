@@ -22,7 +22,7 @@ struct ProFileView: View {
                                 Alert(title:
                                         Text(viewModel.netWork.errorString),
                                       message: Text(viewModel.netWork.errorString),
-                                      dismissButton: .cancel(Text("Click me"),action: {viewModel.netWork.getList() }))
+                                      dismissButton: .cancel(Text("Click me"),action: {viewModel.netWork.getUser(url: user.id) }))
                             }
                     }
                     

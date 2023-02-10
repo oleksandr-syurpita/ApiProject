@@ -14,7 +14,7 @@ class MainListViewModel: ObservableObject {
         case nabigationBack
     }
     
-     var netWork = ApiModel()
+    var netWork = ApiModel()
 
     var onResult:((Result) -> Void)?
     

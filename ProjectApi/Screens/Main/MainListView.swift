@@ -10,35 +10,35 @@ import SwiftUI
 struct MainListView: View {
     
     @ObservedObject var mainListViewModel = MainListViewModel()
-    
+    @ObservedObject  var netWork = ApiModel()
     var body: some View {
         VStack {
-            List(mainListViewModel.netWork.users) { user in
+            List(netWork.users) { user in
                 HStack {
                     Button(action: {
                         mainListViewModel.navigationDetal(user: user)},
                            label: { Text(user.firstName)})
-                    .alertCustom(isPresented: $mainListViewModel.netWork.errorOn) {
+                    .alert(isPresented: $netWork.errorOn) {
                         Alert(
-                            title: Text(mainListViewModel.netWork.errorString),
-                            message: Text(mainListViewModel.netWork.errorString),
+                            title: Text(netWork.errorString),
+                            message: Text(netWork.errorString),
                             dismissButton: .cancel(
                                 Text("Click me"),
-                                action: mainListViewModel.netWork.getList
+                                action: netWork.getList
                             )
                         )
                     }
                 }
             }
             Button {
-                mainListViewModel.netWork.users.removeAll()
-                mainListViewModel.netWork.getList()
+                netWork.users.removeAll()
+                netWork.getList()
             } label: {
                 Text("RESET")
             }
 
         }.onAppear{
-            mainListViewModel.netWork.getList()
+            netWork.getList()
         }
     }
 }

@@ -10,12 +10,13 @@ import Foundation
 class ApiModel: ObservableObject {
     
 
-    var errorOn = false
+    @Published var errorOn = false
+    @Published var errorString = ""
+
     var statusList = ""
     var statusUser = ""
     
     @Published var listId: [String] = []
-    @Published var errorString = ""
     @Published var users = [UserData]()
     @Published var userData = UserRespons(
         status: "??",
@@ -46,19 +47,21 @@ class ApiModel: ObservableObject {
                         let decoded = try JSONDecoder().decode(DataRespons.self, from: data)
                         self.listId = decoded.data
                         self.statusList = decoded.status
-                        
+                        print("\(response.statusCode)")
                         for id in self.listId {
                             getUser(url: id)
-                            if statusList == "error" {
-                                self.errorOn = true
-                                self.errorString = "NOOT Good"
-                            }
                         }
                     } catch let error{
                         self.errorString = error.localizedDescription
                         self.errorOn = true
                     }
                 }
+            }else if response.statusCode == 404{
+                    self.errorOn = true
+                    self.errorString = "Error 404"
+            } else if response.statusCode == 500{
+                        self.errorOn = true
+                        self.errorString = "Error 500"
             }
         }
         dataTask.resume()

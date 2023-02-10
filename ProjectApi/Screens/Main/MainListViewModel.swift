@@ -13,8 +13,9 @@ class MainListViewModel: ObservableObject {
         case navigationDetal(user: UserData)
         case nabigationBack
     }
- 
-    var netWork = ApiModel()
+    
+     var netWork = ApiModel()
+
     var onResult:((Result) -> Void)?
     
     func navigationDetal(user: UserData) {

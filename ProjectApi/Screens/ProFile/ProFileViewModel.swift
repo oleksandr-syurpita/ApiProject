@@ -19,11 +19,15 @@ class ProFileViewModel: ObservableObject {
     
     func navigationBack() {
         onResult?(.navigationBackToList)
-        netWork.getList()
+        netWork.getList() {
+            
+        }
     }
     
     func navigationBackTO() {
         onResult?(.navigationBackToList)
-        netWork.getList()
+        netWork.getList() {
+            
+        }
     }
 }

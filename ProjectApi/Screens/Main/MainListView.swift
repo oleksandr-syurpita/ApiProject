@@ -11,6 +11,7 @@ struct MainListView: View {
     
     @ObservedObject var mainListViewModel = MainListViewModel()
     @ObservedObject  var netWork = ApiModel()
+    
     var body: some View {
         VStack {
             List(netWork.users) { user in
@@ -18,13 +19,15 @@ struct MainListView: View {
                     Button(action: {
                         mainListViewModel.navigationDetal(user: user)},
                            label: { Text(user.firstName)})
-                    .alert(isPresented: $netWork.errorOn) {
+                    .alertCustom(isPresented: $netWork.errorOn) {
                         Alert(
                             title: Text(netWork.errorString),
                             message: Text(netWork.errorString),
                             dismissButton: .cancel(
                                 Text("Click me"),
-                                action: netWork.getList
+                                action: {netWork.getList() {
+                                    
+                                }}
                             )
                         )
                     }
@@ -32,13 +35,17 @@ struct MainListView: View {
             }
             Button {
                 netWork.users.removeAll()
-                netWork.getList()
+                netWork.getList(){
+                    
+                }
             } label: {
                 Text("RESET")
             }
 
         }.onAppear{
-            netWork.getList()
+            netWork.getList(){
+                
+            }
         }
     }
 }

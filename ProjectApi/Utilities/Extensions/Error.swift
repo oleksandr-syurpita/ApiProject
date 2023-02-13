@@ -16,11 +16,11 @@ extension View {
 
 struct InspectableAlert: ViewModifier {
     
-    let isPresented: Binding<Bool>
+    @Binding var isPresented: Bool
     let popupBuilder: () -> Alert
     let onDismiss: (() -> Void)? = nil
     
     func body(content: Self.Content) -> some View {
-        content.alert(isPresented: isPresented, content: popupBuilder)
+        content.alert(isPresented: $isPresented, content: popupBuilder)
     }
 }

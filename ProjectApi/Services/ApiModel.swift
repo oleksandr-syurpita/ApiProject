@@ -29,25 +29,23 @@ class ApiModel: ObservableObject {
             country: "???")
     )
             
-    func getList() {
+    func getList(completion: @escaping () -> Void) {
         guard let url = URL(string: "https://opn-interview-service.nn.r.appspot.com/list") else {  return }
         var request = URLRequest(url: url)
         request.addValue("bearer \(token)", forHTTPHeaderField: "Authorization")
         let dataTask = URLSession.shared.dataTask(with: request) { (data, response, error) in
             if let error = error {
-                self.errorString = error.localizedDescription
-                self.errorOn = true
                 return
             }
             guard let response = response as? HTTPURLResponse else { return }
+            guard let data = data else { return }
+
             if response.statusCode == 200 {
-                guard let data = data else { return }
                 DispatchQueue.main.async { [self] in
                     do {
                         let decoded = try JSONDecoder().decode(DataRespons.self, from: data)
                         self.listId = decoded.data
                         self.statusList = decoded.status
-                        print("\(response.statusCode)")
                         for id in self.listId {
                             getUser(url: id)
                         }

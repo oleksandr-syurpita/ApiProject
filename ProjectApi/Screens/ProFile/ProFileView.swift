@@ -19,11 +19,16 @@ struct ProFileView: View {
                     Section {
                         details
                             .alertCustom(isPresented: $viewModel.netWork.errorOn) {
-                                Alert(title:
-                                        Text(viewModel.netWork.errorString),
-                                      message: Text(viewModel.netWork.errorString),
-                                      dismissButton: .cancel(Text("Click me"),action: {viewModel.netWork.getUser(url: user.id) }))
-                            }
+                                Alert(
+                                    title: Text(viewModel.netWork.errorString),
+                                    message: Text(viewModel.netWork.errorString),
+                                    dismissButton: .cancel(
+                                        Text("Click me"),
+                                        action: {viewModel.netWork.getUser(url: user.id)
+                                    }
+                                )
+                            )
+                        }
                     }
                     
                 }
@@ -34,7 +39,7 @@ struct ProFileView: View {
 }
 
 extension ProFileView {
-
+    
     var details: some View {
         VStack {
             createButton(text: "ID",  detail: String(user.id))

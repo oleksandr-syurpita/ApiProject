@@ -13,7 +13,7 @@ class ApiModel: ObservableObject {
         guard let url = URL(string: "https://opn-interview-service.nn.r.appspot.com/list") else {  return }
         var request = URLRequest(url: url)
         request.addValue("bearer \(token)", forHTTPHeaderField: "Authorization")
-        let dataTask = URLSession.shared.dataTask(with: request) { (data, respons, error)in
+         URLSession.shared.dataTask(with: request) { (data, respons, error)in
             guard let respons = respons as? HTTPURLResponse else {return}
             guard let data = data else {return}
             if respons.statusCode == 200 {
@@ -38,7 +38,7 @@ class ApiModel: ObservableObject {
         guard let url = URL(string: "https://opn-interview-service.nn.r.appspot.com/get/\(url)") else {  return }
         var request = URLRequest(url: url)
         request.addValue("bearer \(token)", forHTTPHeaderField: "Authorization")
-        let dataTask = URLSession.shared.dataTask(with: request) { (data, respons, error)in
+         URLSession.shared.dataTask(with: request) { (data, respons, error)in
             guard let respons = respons as? HTTPURLResponse else {return}
             guard let data = data else {return}
 

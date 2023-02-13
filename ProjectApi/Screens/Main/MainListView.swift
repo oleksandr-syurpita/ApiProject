@@ -15,22 +15,20 @@ struct MainListView: View {
         VStack {
             List(mainListViewModel.users) { users in
                 Button(action: {
-                    mainListViewModel.navigationDetal(
-                    user: users)
+                    mainListViewModel.navigationDetal(user: users)
                 }, label: {Text(users.firstName)}
                 )
-                .alert(isPresented: $mainListViewModel.erroHandler.showError) {
-                    Alert(
-                        title: Text(mainListViewModel.erroHandler.error),
-                        message: Text(mainListViewModel.erroHandler.error),
-                        dismissButton: .cancel(
-                            Text("Click me"),
-                            action: {
-                        mainListViewModel.createList()
-                            }
-                        )
+            }
+            .alertCustom(isPresented: $mainListViewModel.erroHandler) {
+                Alert(
+                    title: Text(mainListViewModel.errorText),
+                    message: Text(mainListViewModel.errorText),
+                    dismissButton: .cancel(
+                        Text("Click me"),
+                        action: {
+                            mainListViewModel.createList() }
                     )
-                }
+                )
             }
             Button {
                 mainListViewModel.users.removeAll()
@@ -38,11 +36,9 @@ struct MainListView: View {
             } label: {
                 Text("RESET")
             }
-
         }.onAppear{
             mainListViewModel.createList()
             mainListViewModel.users.removeAll()
-
         }
     }
 }

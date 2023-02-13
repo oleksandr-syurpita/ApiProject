@@ -14,7 +14,8 @@ class MainListViewModel: ObservableObject {
     var apiService: ApiModel
     var list: [DataRespons] = []
     @Published var users = [UserData]()
-    @Published var erroHandler = ErroHandler()
+    @Published var erroHandler = false
+    @Published var errorText = ""
 
     init(apiService: ApiModel) {
         self.apiService = apiService
@@ -39,6 +40,9 @@ class MainListViewModel: ObservableObject {
                     self.users.append(userData)
                 }
             }
+        }completionError: { error in
+            self.erroHandler = true
+            self.errorText = error.localizedDescription
         }
     }
 }

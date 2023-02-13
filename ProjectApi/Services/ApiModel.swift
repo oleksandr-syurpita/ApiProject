@@ -9,15 +9,13 @@ import Foundation
 
 class ApiModel: ObservableObject {
 
-   @Published var erroHandler = ErroHandler()
-    func getList(completion: @escaping (DataRespons) -> Void) {
+    func getList(completion: @escaping (DataRespons) -> Void,completionError: @escaping (Error) -> Void) {
         guard let url = URL(string: "https://opn-interview-service.nn.r.appspot.com/list") else {  return }
         var request = URLRequest(url: url)
         request.addValue("bearer \(token)", forHTTPHeaderField: "Authorization")
         let dataTask = URLSession.shared.dataTask(with: request) { (data, respons, error)in
             guard let respons = respons as? HTTPURLResponse else {return}
             guard let data = data else {return}
-
             if respons.statusCode == 200 {
                 DispatchQueue.main.async {
                     do {
@@ -25,13 +23,15 @@ class ApiModel: ObservableObject {
                             completion(decode)
                     }
                     catch {
-                        self.erroHandler.error = error.localizedDescription 
-                        self.erroHandler.showError = true
+                        completionError(error)
                     }
                 }
             }else {
-                self.erroHandler.error = "Sorry error"
-                self.erroHandler.showError = true
+                if let error = error {
+                    completionError(error)
+                    print("very not ok")
+                }
+                print("not ok")
             }
         }.resume()
     }

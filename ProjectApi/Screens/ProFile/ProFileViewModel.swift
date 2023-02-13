@@ -12,7 +12,9 @@ class ProFileViewModel: ObservableObject {
     var listRespons = DataRespons(data: [""], status: "")
     var apiService: ApiModel
     var list: [DataRespons] = []
+    var errorText = ""
     @Published var users = [UserData]()
+    @Published var erroHandler = false
     
     init (apiservice: ApiModel){
         self.apiService = apiservice
@@ -40,6 +42,9 @@ class ProFileViewModel: ObservableObject {
                     self.users.append(userData)
                 }
             }
+        } completionError: { error in
+            self.erroHandler = true
+            self.errorText = error.localizedDescription
         }
     }
 }

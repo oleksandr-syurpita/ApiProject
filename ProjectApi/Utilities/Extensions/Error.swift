@@ -25,7 +25,7 @@ struct InspectableAlert: ViewModifier {
     }
 }
 
-class ErroHandler: ObservableObject{
-   @Published var error = ""
-   @Published var showError = false 
+enum NetworkError : Error {
+    case cityNotFound
+    case timeOut
 }

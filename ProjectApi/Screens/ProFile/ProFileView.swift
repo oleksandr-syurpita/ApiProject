@@ -18,22 +18,12 @@ struct ProFileView: View {
                 Form {
                     Section {
                         details
-                            .alertCustom(isPresented: $viewModel.netWork.errorOn) {
-                                Alert(
-                                    title: Text(viewModel.netWork.errorString),
-                                    message: Text(viewModel.netWork.errorString),
-                                    dismissButton: .cancel(
-                                        Text("Click me"),
-                                        action: {viewModel.netWork.getUser(url: user.id)
-                                    }
-                                )
-                            )
-                        }
                     }
                     
                 }
             }
-            .createTolbarProFileScreen(dismiss: {viewModel.navigationBackTO()}, text: String("\(user.firstName)" + "\(user.lastName)"))
+            .createTolbarProFileScreen(dismiss: {viewModel.navigationBackTO()
+            }, text: String("\(user.firstName)" + "\(user.lastName)"))
         }
     }
 }
@@ -54,6 +44,6 @@ extension ProFileView {
 
 struct ProFileView_Previews: PreviewProvider {
     static var previews: some View {
-        ProFileView(viewModel: .init(), user: UserData(id: "??", firstName: "Dima", lastName: "Kekish", age: 18, gender: "man", country: "Ukraine"))
+        ProFileView(viewModel: .init(apiservice: ApiModel()), user: UserData(id: "??", firstName: "Dima", lastName: "Kekish", age: 18, gender: "man", country: "Ukraine"))
     }
 }

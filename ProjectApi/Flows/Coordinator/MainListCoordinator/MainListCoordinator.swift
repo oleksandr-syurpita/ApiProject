@@ -29,7 +29,7 @@ class MainListCoordinator: ObservableObject {
     }
   
     func moveToProfile(user: UserData) {
-        let coordinator = ProFileCoordinator(viewModel: ProFileViewModel(), user: user)
+        let coordinator = ProFileCoordinator(viewModel: ProFileViewModel(apiservice: ApiModel()), user: user)
         coordinator.onResult = {[weak self] result in
             switch result {
                 

@@ -8,90 +8,58 @@
 import Foundation
 
 class ApiModel: ObservableObject {
-    
 
-    @Published var errorOn = false
-    @Published var errorString = ""
-
-    var statusList = ""
-    var statusUser = ""
-    
-    @Published var listId: [String] = []
-    @Published var users = [UserData]()
-    @Published var userData = UserRespons(
-        status: "??",
-        data: UserData(
-            id: "???",
-            firstName: "???",
-            lastName: "??",
-            age: 4,
-            gender: "???",
-            country: "???")
-    )
-            
-    func getList(completion: @escaping () -> Void) {
+   @Published var erroHandler = ErroHandler()
+    func getList(completion: @escaping (DataRespons) -> Void) {
         guard let url = URL(string: "https://opn-interview-service.nn.r.appspot.com/list") else {  return }
         var request = URLRequest(url: url)
         request.addValue("bearer \(token)", forHTTPHeaderField: "Authorization")
-        let dataTask = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            if let error = error {
-                return
-            }
-            guard let response = response as? HTTPURLResponse else { return }
-            guard let data = data else { return }
+        let dataTask = URLSession.shared.dataTask(with: request) { (data, respons, error)in
+            guard let respons = respons as? HTTPURLResponse else {return}
+            guard let data = data else {return}
 
-            if response.statusCode == 200 {
-                DispatchQueue.main.async { [self] in
+            if respons.statusCode == 200 {
+                DispatchQueue.main.async {
                     do {
-                        let decoded = try JSONDecoder().decode(DataRespons.self, from: data)
-                        self.listId = decoded.data
-                        self.statusList = decoded.status
-                        for id in self.listId {
-                            getUser(url: id)
-                        }
-                    } catch let error{
-                        self.errorString = error.localizedDescription
-                        self.errorOn = true
+                        let decode = try JSONDecoder().decode(DataRespons.self, from: data)
+                            completion(decode)
+                    }
+                    catch {
+                        self.erroHandler.error = error.localizedDescription 
+                        self.erroHandler.showError = true
                     }
                 }
-            }else if response.statusCode == 404{
-                    self.errorOn = true
-                    self.errorString = "Error 404"
-            } else if response.statusCode == 500{
-                        self.errorOn = true
-                        self.errorString = "Error 500"
+            }else {
+                self.erroHandler.error = "Sorry error"
+                self.erroHandler.showError = true
             }
-        }
-        dataTask.resume()
+        }.resume()
     }
     
-    func getUser(url: String) {
-        guard let url = URL(string: "https://opn-interview-service.nn.r.appspot.com/get/\(url)") else { fatalError("Missing URL") }
+    
+    func getUser(url: String, completion: @escaping (UserData) -> Void) {
+        guard let url = URL(string: "https://opn-interview-service.nn.r.appspot.com/get/\(url)") else {  return }
         var request = URLRequest(url: url)
         request.addValue("bearer \(token)", forHTTPHeaderField: "Authorization")
-        let dataTask = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            if let error = error {
-                self.errorString = error.localizedDescription
-                self.errorOn = true
-                return
-            }
-            guard let response = response as? HTTPURLResponse else { return }
-            if response.statusCode == 200 {
-                guard let data = data else { return }
-                DispatchQueue.main.async { [self] in
+        let dataTask = URLSession.shared.dataTask(with: request) { (data, respons, error)in
+            guard let respons = respons as? HTTPURLResponse else {return}
+            guard let data = data else {return}
+
+            if respons.statusCode == 200 {
+                DispatchQueue.main.async {
                     do {
-                        let decoded = try JSONDecoder().decode(UserRespons.self, from: data)
-                        self.userData = decoded
-                        self.statusUser = decoded.status
-                        users.append(decoded.data)
-                    } catch let error{
-                        self.errorString = error.localizedDescription
-                        self.errorOn = true
+                        let decode = try JSONDecoder().decode(UserRespons.self, from: data)
+                        let user = decode.data
+                        completion(user)
+                    }
+                    catch {
+                        print("error decode")
                     }
                 }
+            }else {
+                print("error status code")
             }
-        }
-        dataTask.resume()
+        }.resume()
     }
 
 }

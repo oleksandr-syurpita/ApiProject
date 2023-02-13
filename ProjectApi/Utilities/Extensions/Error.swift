@@ -24,3 +24,8 @@ struct InspectableAlert: ViewModifier {
         content.alert(isPresented: $isPresented, content: popupBuilder)
     }
 }
+
+class ErroHandler: ObservableObject{
+   @Published var error = ""
+   @Published var showError = false 
+}

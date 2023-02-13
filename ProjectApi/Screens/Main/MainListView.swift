@@ -9,49 +9,46 @@ import SwiftUI
 
 struct MainListView: View {
     
-    @ObservedObject var mainListViewModel = MainListViewModel()
-    @ObservedObject  var netWork = ApiModel()
+    @ObservedObject var mainListViewModel: MainListViewModel
     
     var body: some View {
         VStack {
-            List(netWork.users) { user in
-                HStack {
-                    Button(action: {
-                        mainListViewModel.navigationDetal(user: user)},
-                           label: { Text(user.firstName)})
-                    .alertCustom(isPresented: $netWork.errorOn) {
-                        Alert(
-                            title: Text(netWork.errorString),
-                            message: Text(netWork.errorString),
-                            dismissButton: .cancel(
-                                Text("Click me"),
-                                action: {netWork.getList() {
-                                    
-                                }}
-                            )
+            List(mainListViewModel.users) { users in
+                Button(action: {
+                    mainListViewModel.navigationDetal(
+                    user: users)
+                }, label: {Text(users.firstName)}
+                )
+                .alert(isPresented: $mainListViewModel.erroHandler.showError) {
+                    Alert(
+                        title: Text(mainListViewModel.erroHandler.error),
+                        message: Text(mainListViewModel.erroHandler.error),
+                        dismissButton: .cancel(
+                            Text("Click me"),
+                            action: {
+                        mainListViewModel.createList()
+                            }
                         )
-                    }
+                    )
                 }
             }
             Button {
-                netWork.users.removeAll()
-                netWork.getList(){
-                    
-                }
+                mainListViewModel.users.removeAll()
+                mainListViewModel.createList()
             } label: {
                 Text("RESET")
             }
 
         }.onAppear{
-            netWork.getList(){
-                
-            }
+            mainListViewModel.createList()
+            mainListViewModel.users.removeAll()
+
         }
     }
 }
 
 struct MainListView_Previews: PreviewProvider {
     static var previews: some View {
-        MainListView()
+        MainListView(mainListViewModel: .init(apiService: ApiModel()))
     }
 }

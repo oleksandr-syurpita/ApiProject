@@ -9,7 +9,7 @@ import Foundation
 
 class ApiModel: ObservableObject {
 
-    func getList(completion: @escaping (DataRespons) -> Void,completionError: @escaping (Error) -> Void) {
+    func getList(completion: @escaping (Result<DataRespons,NetworkError>) -> Void) {
         guard let url = URL(string: "https://opn-interview-service.nn.r.appspot.com/list") else {  return }
         var request = URLRequest(url: url)
         request.addValue("bearer \(token)", forHTTPHeaderField: "Authorization")
@@ -20,18 +20,15 @@ class ApiModel: ObservableObject {
                 DispatchQueue.main.async {
                     do {
                         let decode = try JSONDecoder().decode(DataRespons.self, from: data)
-                            completion(decode)
+                        completion(.success(decode))
                     }
                     catch {
-                        completionError(error)
+                        print("error decode")
+
                     }
                 }
             }else {
-                if let error = error {
-                    completionError(error)
-                    print("very not ok")
-                }
-                print("not ok")
+                completion(.failure(NetworkError.error))
             }
         }.resume()
     }

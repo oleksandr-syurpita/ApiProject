@@ -35,16 +35,21 @@ class ProFileViewModel: ObservableObject {
     }
     
      func createList() {
-        apiService.getList { (listRespons) in
-            self.listRespons = listRespons
-            for string in listRespons.data {
-                self.apiService.getUser(url: string) { userData in
-                    self.users.append(userData)
+        apiService.getList { result in
+            switch result {
+            case .success(let data):
+                    self.listRespons = data
+                for string in self.listRespons.data {
+                        self.apiService.getUser(url: string) { userData in
+                            self.users.append(userData)
+                        }
+                    }
+            case .failure(let error):
+                if error == .error {
+                    self.errorText = "Error alert"
+                    self.erroHandler = true
                 }
             }
-        } completionError: { error in
-            self.erroHandler = true
-            self.errorText = error.localizedDescription
         }
     }
 }

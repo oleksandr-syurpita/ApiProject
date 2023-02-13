@@ -19,7 +19,6 @@ struct ProFileView: View {
                     Section {
                         details
                     }
-                    
                 }
             }
             .createTolbarProFileScreen(dismiss: {viewModel.navigationBackTO()

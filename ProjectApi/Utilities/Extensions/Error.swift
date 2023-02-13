@@ -26,6 +26,5 @@ struct InspectableAlert: ViewModifier {
 }
 
 enum NetworkError : Error {
-    case cityNotFound
-    case timeOut
+    case error
 }

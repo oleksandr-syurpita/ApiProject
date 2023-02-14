@@ -32,7 +32,6 @@ class MainListCoordinator: ObservableObject {
         let coordinator = ProFileCoordinator(viewModel: ProFileViewModel(apiservice: ApiModel()), user: user)
         coordinator.onResult = {[weak self] result in
             switch result {
-                
             case .navigationBack:
                 self?.route = nil
             }

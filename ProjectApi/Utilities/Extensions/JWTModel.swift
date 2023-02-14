@@ -9,6 +9,7 @@ import Foundation
 import CryptoKit
 
 extension Data {
+    
     func urlSafeBase64EncodedString() -> String {
         return base64EncodedString()
             .replacingOccurrences(of: "+", with: "-")
@@ -23,7 +24,6 @@ extension String {
         guard let data = Data(base64Encoded: self) else {
             return nil
         }
-
         return String(data: data, encoding: .utf8)
     }
 

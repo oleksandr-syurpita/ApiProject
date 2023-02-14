@@ -14,9 +14,8 @@ struct MainListView: View {
     var body: some View {
         VStack {
             List(mainListViewModel.users) { users in
-                Button(action: {
-                    mainListViewModel.navigationDetal(user: users)
-                }, label: {Text(users.firstName)}
+                Button(action: { mainListViewModel.navigationDetal(user: users)},
+                       label: { Text(users.firstName) }
                 )
             }
             .alertCustom(isPresented: $mainListViewModel.erroHandler) {
@@ -33,9 +32,7 @@ struct MainListView: View {
             Button {
                 mainListViewModel.users.removeAll()
                 mainListViewModel.createList()
-            } label: {
-                Text("RESET")
-            }
+            } label: { Text("RESET") }
         }.onAppear{
             mainListViewModel.createList()
             mainListViewModel.users.removeAll()

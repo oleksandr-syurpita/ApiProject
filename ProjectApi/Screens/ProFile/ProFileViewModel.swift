@@ -19,6 +19,7 @@ class ProFileViewModel: ObservableObject {
     init (apiservice: ApiModel){
         self.apiService = apiservice
     }
+    
     enum Result {
         case navigationBackToList
         case navigationBack

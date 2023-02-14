@@ -24,7 +24,6 @@ class ApiModel: ObservableObject {
                     }
                     catch {
                         print("error decode")
-
                     }
                 }
             }else {

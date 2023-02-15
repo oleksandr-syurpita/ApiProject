@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct UserRespons: Codable {
+struct UserResponses: Codable {
     
     let status: String
     let data: UserData

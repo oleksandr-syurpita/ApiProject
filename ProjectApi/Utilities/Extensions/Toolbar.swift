@@ -10,7 +10,7 @@ import SwiftUI
 
 extension View {
     
-    func createTolbarProFileScreen(dismiss: (() -> Void)?, text: String) -> some View {
+    func createToolbarProFileScreen(dismiss: (() -> Void)?, text: String) -> some View {
         self.toolbar(content: {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button(action: {dismiss?()}) {

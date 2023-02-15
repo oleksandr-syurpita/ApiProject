@@ -24,7 +24,7 @@
 		84988FD6299540240079AA43 /* ProFileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84988FD5299540240079AA43 /* ProFileCoordinator.swift */; };
 		84988FD82995403F0079AA43 /* MainListCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84988FD72995403F0079AA43 /* MainListCoordinatorView.swift */; };
 		84988FDA299540560079AA43 /* MainListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84988FD9299540560079AA43 /* MainListCoordinator.swift */; };
-		84988FDC299540850079AA43 /* ApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84988FDB299540850079AA43 /* ApiModel.swift */; };
+		84988FDC299540850079AA43 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84988FDB299540850079AA43 /* UserService.swift */; };
 		84988FDF299540BB0079AA43 /* SwiftUINavigation in Frameworks */ = {isa = PBXBuildFile; productRef = 84988FDE299540BB0079AA43 /* SwiftUINavigation */; };
 		84988FE8299541FD0079AA43 /* ProjectApiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84988FE7299541FD0079AA43 /* ProjectApiTests.swift */; };
 		84988FF3299542810079AA43 /* ViewInspector in Frameworks */ = {isa = PBXBuildFile; productRef = 84988FF2299542810079AA43 /* ViewInspector */; };
@@ -60,7 +60,7 @@
 		84988FD5299540240079AA43 /* ProFileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProFileCoordinator.swift; sourceTree = "<group>"; };
 		84988FD72995403F0079AA43 /* MainListCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainListCoordinatorView.swift; sourceTree = "<group>"; };
 		84988FD9299540560079AA43 /* MainListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainListCoordinator.swift; sourceTree = "<group>"; };
-		84988FDB299540850079AA43 /* ApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiModel.swift; sourceTree = "<group>"; };
+		84988FDB299540850079AA43 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		84988FE5299541FD0079AA43 /* ProjectApiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ProjectApiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		84988FE7299541FD0079AA43 /* ProjectApiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectApiTests.swift; sourceTree = "<group>"; };
 		849ECB44299654460040EE14 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
@@ -131,7 +131,7 @@
 		84988FB429953E690079AA43 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				84988FDB299540850079AA43 /* ApiModel.swift */,
+				84988FDB299540850079AA43 /* UserService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -383,7 +383,7 @@
 				84988FCB29953FC30079AA43 /* Data.swift in Sources */,
 				84988FCD29953FD00079AA43 /* User.swift in Sources */,
 				84988FC529953F770079AA43 /* JWTModel.swift in Sources */,
-				84988FDC299540850079AA43 /* ApiModel.swift in Sources */,
+				84988FDC299540850079AA43 /* UserService.swift in Sources */,
 				84988FDA299540560079AA43 /* MainListCoordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

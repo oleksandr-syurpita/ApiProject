@@ -11,7 +11,7 @@ import SwiftUI
 struct ProjectApiApp: App {
     var body: some Scene {
         WindowGroup {
-            MainListCoordinatorView(coordinator: MainListCoordinator(viewModel: MainListViewModel(apiService: ApiModel())))
+            MainListCoordinatorView(coordinator: MainListCoordinator(viewModel: MainListViewModel(apiService: UserService())))
         }
     }
 }

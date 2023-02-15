@@ -20,16 +20,16 @@ class MainListCoordinator: ObservableObject {
         self.viewModel = viewModel
         viewModel.onResult = {[weak self] result in
             switch result {
-            case .navigationDetal(let user):
+            case .navigationDetail(let user):
                 self?.moveToProfile(user: user)
-            case .nabigationBack:
+            case .navigationBack:
                 self?.route = nil
             }
         }
     }
   
     func moveToProfile(user: UserData) {
-        let coordinator = ProFileCoordinator(viewModel: ProFileViewModel(apiservice: ApiModel()), user: user)
+        let coordinator = ProFileCoordinator(viewModel: ProFileViewModel(apiService: UserService()), user: user)
         coordinator.onResult = {[weak self] result in
             switch result {
             case .navigationBack:

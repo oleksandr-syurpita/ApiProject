@@ -9,35 +9,35 @@ import Foundation
 
 class MainListViewModel: ObservableObject {
     
+    var listResponses = DataResponses(data: [""], status: "")
+    var apiService: UserService
+    var list: [DataResponses] = []
     
-    var listRespons = DataRespons(data: [""], status: "")
-    var apiService: ApiModel
-    var list: [DataRespons] = []
     @Published var users = [UserData]()
-    @Published var erroHandler = false
+    @Published var errorHandler = false
     @Published var errorText = ""
 
-    init(apiService: ApiModel) {
+    init(apiService: UserService) {
         self.apiService = apiService
     }
 
     enum Result {
-        case navigationDetal(user: UserData)
-        case nabigationBack
+        case navigationDetail(user: UserData)
+        case navigationBack
     }
     
     var onResult:((Result) -> Void)?
     
-    func navigationDetal(user: UserData) {
-        onResult?(.navigationDetal(user: user))
+    func navigationDetail(user: UserData) {
+        onResult?(.navigationDetail(user: user))
     }
     
     @MainActor func createList() {
         apiService.getList { result in
             switch result {
             case .success(let data):
-                self.listRespons = data
-                for string in self.listRespons.data {
+                self.listResponses = data
+                for string in self.listResponses.data {
                     self.apiService.getUser(url: string) { userData in
                         self.users.append(userData)
                     }
@@ -45,7 +45,7 @@ class MainListViewModel: ObservableObject {
             case .failure(let error):
                 if error == .error {
                     self.errorText = "Error alert"
-                    self.erroHandler = true
+                    self.errorHandler = true
                 }
             }
         }

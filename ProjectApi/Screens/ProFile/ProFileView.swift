@@ -21,8 +21,9 @@ struct ProFileView: View {
                     }
                 }
             }
-            .createTolbarProFileScreen(dismiss: {viewModel.navigationBackTO()
-            }, text: String("\(user.firstName)" + "\(user.lastName)"))
+            .createToolbarProFileScreen(
+                dismiss: {viewModel.navigationBackTO()},
+                text: String("\(user.firstName)" + "\(user.lastName)"))
         }
     }
 }
@@ -43,6 +44,6 @@ extension ProFileView {
 
 struct ProFileView_Previews: PreviewProvider {
     static var previews: some View {
-        ProFileView(viewModel: .init(apiservice: ApiModel()), user: UserData(id: "??", firstName: "Dima", lastName: "Kekish", age: 18, gender: "man", country: "Ukraine"))
+        ProFileView(viewModel: .init(apiService: UserService()), user: UserData(id: "??", firstName: "Dima", lastName: "Kekish", age: 18, gender: "man", country: "Ukraine"))
     }
 }
